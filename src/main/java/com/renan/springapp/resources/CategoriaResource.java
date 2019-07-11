@@ -1,4 +1,4 @@
-package com.renan.SpringApp.resources;
+package com.renan.springapp.resources;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.renan.SpringApp.domain.Categoria;
-import com.renan.SpringApp.services.CategoriaService;
+import com.renan.springapp.domain.Categoria;
+import com.renan.springapp.services.CategoriaService;
 
 @RestController
 @RequestMapping(value="categorias")
@@ -21,10 +21,9 @@ public class CategoriaResource {
 	CategoriaService service;
 
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
-		
+	public ResponseEntity<?> find(@PathVariable Integer id) {			
 		Categoria obj = service.buscar(id);
 
-		return ResponseEntity.ok().body(obj);
+		return ResponseEntity.ok().body(obj);	
 	}
 }
