@@ -13,6 +13,7 @@ import com.renan.springapp.domain.Cidade;
 import com.renan.springapp.domain.Cliente;
 import com.renan.springapp.domain.Endereco;
 import com.renan.springapp.domain.Estado;
+import com.renan.springapp.domain.ItemPedido;
 import com.renan.springapp.domain.Pagamento;
 import com.renan.springapp.domain.PagamentoComBoleto;
 import com.renan.springapp.domain.PagamentoComCartao;
@@ -25,12 +26,13 @@ import com.renan.springapp.repositories.CidadeRepository;
 import com.renan.springapp.repositories.ClienteRepository;
 import com.renan.springapp.repositories.EnderecoRepository;
 import com.renan.springapp.repositories.EstadoRepository;
+import com.renan.springapp.repositories.ItemPedidoRepository;
 import com.renan.springapp.repositories.PagamentoRepository;
 import com.renan.springapp.repositories.PedidoRepository;
 import com.renan.springapp.repositories.ProdutoRepository;
 
 @SpringBootApplication
-public class AppExercicioApplication implements CommandLineRunner{
+public class SpringAppApplication implements CommandLineRunner{
 	
 	@Autowired
 	private CategoriaRepository catRepo;
@@ -48,10 +50,12 @@ public class AppExercicioApplication implements CommandLineRunner{
 	private PedidoRepository pedRepo;
 	@Autowired
 	private PagamentoRepository pagRepo;
+	@Autowired
+	private ItemPedidoRepository itemRepo;
 	
 	
 	public static void main(String[] args) {
-		SpringApplication.run(AppExercicioApplication.class, args);
+		SpringApplication.run(SpringAppApplication.class, args);
 	}
 	
 	@Override
@@ -115,6 +119,21 @@ public class AppExercicioApplication implements CommandLineRunner{
 		
 		pedRepo.saveAll(Arrays.asList(ped1,ped2));
 		pagRepo.saveAll(Arrays.asList(pagto1,pagto2));
-	}
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0, 1, 2000.00);		
+		ItemPedido ip2 = new ItemPedido(ped1,p3,0.00,2,80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100, 1, 800.00);
+		
+		
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemRepo.saveAll(Arrays.asList(ip1,ip2,ip3));
+		
+		}
 
 }
